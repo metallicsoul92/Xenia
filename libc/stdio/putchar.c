@@ -13,3 +13,12 @@ int putchar(int ic) {
 #endif
 	return ic;
 }
+
+int putline(char * string){
+	#if defined(__is_libk)
+		terminal_writeLine(string);
+	#else
+	// TODO : Implement stdio and the write system call.
+	#endif
+	return 0;
+}

@@ -7,7 +7,11 @@
 #include "../../kernel/arch/i386/idt.h"
 #include "../../kernel/arch/i386/irq.h"
 #include "../../kernel/arch/i386/isr.h"
-
+#include "../../kernel/arch/i386/page.h"
+#include "../include/Xenia/module.h"
+#include "../include/Xenia/sysinfo.h"
+#include "../include/Xenia/time.h"
+#include "../arch/i386/kbd.h"
 /*this prints the cursor to row 1 column 0;
 outb(0x3D4, 14);
 outb(0x3D5, 0x00);
@@ -16,7 +20,7 @@ outb(0x3D5, 0x50);
 */
 
 void kernel_main(void) {
-	__state__ = TS_STARTUP;
+	__state__ = KS_STARTUP;
 	terminal_initialize();
 	terminal_writeLine("Initializing Xenia.");
 	terminal_writeLine("Installing Global Descriptor Table");
@@ -26,7 +30,12 @@ void kernel_main(void) {
 	terminal_writeLine("IDT Installed. Installing Interupt Request Line");
 	isrs_install();
 	irq_install();
-
-	while(1);
+	terminal_writeLine("ISRS Installed... IRQ Installed...");
+	setupPaging();
+	terminal_writeLine("Paging installed...");
+	printf("Current Position: %c\n", currentPos );
+	while(1){
+		keyboard_handler_main();
+	}
 
 }

@@ -10,6 +10,10 @@ extern "C" {
 __attribute__((__noreturn__))
 void abort(void);
 
+
+typedef unsigned int size_t;
+
+
 #ifdef __cplusplus
 }
 #endif

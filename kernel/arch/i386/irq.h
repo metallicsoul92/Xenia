@@ -7,6 +7,7 @@
 
 
 
+
 /* Programmable interrupt controller */
 #define PIC1           0x20
 #define PIC1_COMMAND   PIC1
@@ -40,7 +41,7 @@ static volatile int sync_depth = 0;
 
 void int_disable(void) {
 	/* Check if interrupts are enabled */
-	uint32_t flags;
+	uint32 flags;
 	asm volatile("pushf\n\t"
 	             "pop %%eax\n\t"
 	             "movl %%eax, %0\n\t"

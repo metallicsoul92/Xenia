@@ -15,6 +15,44 @@ void updateCurrentPos(){
 	currentPos = (terminal_row * VGA_WIDTH)+terminal_column;
 }
 
+terminal_Color create_static_terminal_color(uint8 c){
+	terminal_Color res;
+	res.color = c;
+	return res;
+}
+terminal_Color create_static_terminal_color_i(struct __internaltc tc){
+	terminal_Color res;
+	res.astc.foreground = tc.foreground;
+	res.astc.background = tc.background;
+	return res;
+}
+
+uint8 tcFromInternal(_internaltc c){
+	uint8 res;
+	res = c.foreground;
+	res += (c.background << 4);
+	return res;
+}
+
+ _internaltc tcFromUint8(uint8 c){
+	_internaltc res;
+ res.foreground = c>>4;
+ res.background = (c &0x00FF);
+ return res;
+}
+
+void terminal_set_color(terminal_Color color){
+	terminal_color = tcFromInternal(color.astc);
+}
+
+
+
+
+void set_terminal_foreground(uint8 foreground);
+
+void set_terminal_background(uint8 background);
+
+
 
 void terminal_initialize(void) {
 	terminal_row = 0;

@@ -1,0 +1,72 @@
+The Xenia Operating System
+
+Written in Assembly and C
+
+
+Main Author: Jim Clark (climjark)
+
+
+Date: 1/12/17
+
+Revision: 1
+
+
+Revision history:
+Number : Date
+1 : 1/12/17
+
+
+Table of contents:
+1. Introduction
+2. System Design Concepts
+3. The Kernel
+4. The File System
+5. Modules
+
+
+1. Introduction
+	Despite the massive amount of free operating systems, for the sake of aquiring more knowledge on how an operating system works, I have decided to create an Operating system which is POSIX compliant, and compatible with Unix-type systems.  This will be a Free Software system. There should be no proprietary software in this system.  I want to be able to run on x86 (i386 and i686) , x86 (AMD's x86), ARM, and x86_64 (maybe will get into embedded processors as well)
+
+2. System Design Concepts
+	The Design of this Operating System is simple. It should be a monolithic kernel, with module support. Meaning, at any time i can add function calls to modules (such as a file system , memory management, network, etc).  The kernel will have basic memory management capabilities, and implement both virtual and physical memory, as well as paging. Files will be stored in a structure in C similar to an inode in linux, except probably less variables inside.  I will first start off with adding network for ipv4, and then move to ipv6 when i feel i can run the OS as a standalone ( other then using qemu)
+3. The Kernel
+
+4. The File System
+	The file system will look similar to UNIX:
+
+/ : the root directory
+/bin : the system programs (binary)
+/boot: the system boot files
+/dev : device files which interact with hardware
+/etc: contains system-wide configuration files and system databases
+/include : the system include files
+/lib : the system library files
+/lib/$ARCH : the system library files for specific architectures
+/media : point which removable devices mount to
+/mnt : temporary mount point
+/opt : contains locally installed software
+/proc: directory showing the processes as files
+/root : the root's home directory
+/sbin : the system binaries
+/source : the system source
+/srv: server data
+/sys : contains files related to system hardware and the operating system
+/usr : the user directories of the file system
+/usr/$NAME : the users home directory
+/usr/$NAME/bin : the users specific programs
+/usr/$NAME/Documents : the users documents
+/usr/$NAME/Downloads : the users downloads
+/usr/$NAME/Desktop : the user's Desktop. if in command-line mode (which yu 			     probably will be for now), user's shells should start 			     here
+/usr/$NAME/source : the users specific source files for programs
+/var : variable files
+/var/log : system log files
+/var/mail: incoming mail
+/var/printer : contains printer jobs
+/var/tmp : temporary file placement
+
+
+
+
+5. Modules
+	Modules work the same way in Xenia as they do in linux.  In linux, a module is defined as " Code that can be loaded into the kernel image at will, without requiring users to rebuild the kernel or reboot their computer. Modular design ensures that you do not have to make a monolithic kernel that contains all code necessary for hardware and situations."
+	Modules will be able to be loaded into the kernel whenever, so i will need to figure out how to do that (possibly load a pointer to a memory address which loads initialization or holds a pointer to functions which do so. 

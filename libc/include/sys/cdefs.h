@@ -15,6 +15,32 @@ typedef unsigned long uintptr;
 //useful gnu typedef
 typedef long ssize_t;
 
+
+#if defined(__STDC__) || defined(__cplusplus)
+#define	__P(protos)	protos		/* full-blown ANSI C */
+#define	__CONCAT(x,y)	x ## y
+#define	__STRING(x)	#x
+
+#else	/* !(__STDC__ || __cplusplus) */
+#define	__P(protos)	()		/* traditional C preprocessor */
+#define	__CONCAT(x,y)	x/**/y
+#define	__STRING(x)	"x"
+
+#ifdef __GNUC__
+#define	const		__const		/* GCC: ANSI C with -traditional */
+#define	inline		__inline
+#define	signed		__signed
+#define	volatile	__volatile
+
+#else	/* !__GNUC__ */
+#define	const				/* delete ANSI C keywords */
+#define	inline
+#define	signed
+#define	volatile
+#endif	/* !__GNUC__ */
+#endif	/* !(__STDC__ || __cplusplus) */
+
+
 /* This typedefs are defined in */
 /* Types used in disk, inode, etc. data structures. */
 typedef short          dev_t;	   /* holds (major|minor) device pair */

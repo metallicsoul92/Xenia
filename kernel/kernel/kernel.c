@@ -33,7 +33,8 @@ void kernel_main(void) {
 	terminal_writeLine("ISRS Installed... IRQ Installed...");
 	setupPaging();
 	terminal_writeLine("Paging installed...");
-	printf("Current Position: %c\n", currentPos );
+	char *currentPosString =itoa(currentPos,10);
+	printf("Current Position: %s\n", currentPosString );
 	while(1){
 		keyboard_handler_main();
 	}

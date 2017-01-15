@@ -6,7 +6,7 @@
 
 static uint32 page_directory[1024] __attribute__((aligned(4096)));
 
-inline void clearPageDirectory(){
+void clearPageDirectory(){
   //set each entry to not present
 int i;
 for(i = 0; i < 1024; i++)
@@ -21,7 +21,7 @@ for(i = 0; i < 1024; i++)
 
 static uint32 first_page_table[1024] __attribute__((aligned(4096)));
 
-inline void fillFirstPage(){
+ void fillFirstPage(){
   // holds the physical address where we want to start mapping these pages to.
 // in this case, we want to map these pages to the very beginning of memory.
 unsigned int i;
@@ -38,7 +38,7 @@ for(i = 0; i < 1024; i++)
 extern void loadPageDirectory(unsigned int*);
 extern void enablePaging();
 
-inline void setupPaging(){
+ void setupPaging(){
   clearPageDirectory();
   fillFirstPage();
   page_directory[0] = ((unsigned int)first_page_table) | 3;

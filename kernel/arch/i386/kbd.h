@@ -48,7 +48,7 @@ unsigned char keyboard_map[128] =
 #define KEYBOARD_DATA_PORT 0x60
 #define KEYBOARD_STATUS_PORT 0x64
 
-inline void keyboard_handler_main(void) {
+ void keyboard_handler_main(void) {
 	unsigned char status;
 	char keycode;
 
@@ -61,8 +61,12 @@ inline void keyboard_handler_main(void) {
 		keycode = inb(KEYBOARD_DATA_PORT);
 		if(keycode < 0)
 			return;
-		terminal_buffer[currentPos++] = keyboard_map[keycode];
-		terminal_buffer[currentPos++] = 0x07;
+      printf("%c",keyboard_map[keycode]);
+      if(keyboard_map[keycode]  =='\n')
+      terminal_writeLine("");
+    //  terminal_putentryat(keyboard_map[keycode],terminal_color,terminal_column++,terminal_row);
+//    terminal_buffer[currentPos++] = keyboard_map[keycode];
+//		terminal_buffer[currentPos++] = 0x07;
 	}
 }
 

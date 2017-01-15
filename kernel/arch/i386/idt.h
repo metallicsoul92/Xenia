@@ -28,6 +28,7 @@ typedef void (*idt_gate_t)(void);
 
 extern void idt_load(uintptr_t);
 
+
 void idt_set_gate(uint8 num, idt_gate_t base, uint16 sel, uint8 flags) {
 	ENTRY(num).base_low = ((uintptr)base & 0xFFFF);
 	ENTRY(num).base_high = ((uintptr)base >> 16) & 0xFFFF;

@@ -11,8 +11,26 @@ static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
 static uint16* const VGA_MEMORY = (uint16*) 0xB8000;
 
+  size_t terminal_row;
+  size_t terminal_column;
+  size_t terminal_page;
+  uint8 terminal_color;
+  uint16* terminal_buffer;
+  int currentPos;
+
+
+
 void updateCurrentPos(){
-	currentPos = (terminal_row * VGA_WIDTH)+terminal_column;
+	uint8 ah = 2;
+	uint8 dh = terminal_row;
+	uint8 dl = terminal_column;
+	uint8 bh = terminal_page;
+
+	asm ("mov %%ah, %0\n" :"=r"(ah));
+	asm ("mov %%dh, %0\n" :"=r"(dh));
+	asm ("mov %%dl, %0\n" :"=r"(dl));
+	asm ("mov %%bh, %0\n" :"=r"(bh));
+	asm ("int $10");
 }
 
 terminal_Color create_static_terminal_color(uint8 c){
@@ -57,6 +75,7 @@ void set_terminal_background(uint8 background);
 void terminal_initialize(void) {
 	terminal_row = 0;
 	terminal_column = 0;
+	terminal_page =0;
 	terminal_color = vga_entry_color(VGA_COLOR_LIGHT_GREY, VGA_COLOR_BLACK);
 	terminal_buffer = VGA_MEMORY;
 	for (size_t y = 0; y < VGA_HEIGHT; y++) {
@@ -85,7 +104,7 @@ void terminal_putchar(char c) {
 		if (++terminal_row == VGA_HEIGHT)
 			terminal_row = 0;
 	}
-	updateCurrentPos();
+	//updateCurrentPos();
 }
 
 void terminal_write(const char* data, size_t size) {

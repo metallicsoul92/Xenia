@@ -25,6 +25,8 @@ uint8 toState(enum moduleState m){
     case MOD_CLEAN:
     return 2;
     break;
+    default:
+    return -1;
   }
 }
 

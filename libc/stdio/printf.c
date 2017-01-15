@@ -101,9 +101,11 @@ static char * number(char * str, int num, int base, int size, int precision
 	} else
 		sign=(type&PLUS) ? '+' : ((type&SPACE) ? ' ' : 0);
 	if (sign) size--;
-	if (type&SPECIAL)
-		if (base==16) size -= 2;
-		else if (base==8) size--;
+	if (type&SPECIAL && base==16)
+		 size -= 2;
+
+		else if (type&SPECIAL && base==8)
+		 size--;
 	i=0;
 	if (num==0)
 		tmp[i++]='0';

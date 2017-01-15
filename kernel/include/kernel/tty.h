@@ -30,11 +30,12 @@ _internaltc tcFromUint8(uint8 c);
 
 terminal_Color createTerminalColor(uint8 fg, uint8 bg);
 
-static size_t terminal_row;
-static size_t terminal_column;
-static uint8 terminal_color;
-static uint16* terminal_buffer;
-static int currentPos;
+extern  size_t terminal_row;
+extern  size_t terminal_column;
+extern  size_t terminal_page;
+extern  uint8 terminal_color;
+extern  uint16* terminal_buffer;
+extern  int currentPos;
 
 
 void setTerminalColor(terminal_Color col);

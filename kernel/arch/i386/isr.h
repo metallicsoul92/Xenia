@@ -70,6 +70,13 @@ static const char *exception_messages[32] = {
 	"Reserved"
 };
 
+extern void isr0();
+extern void isr31();
+void isr_handler(regs_t regs){
+	
+}
+
+
 void fault_handler(struct regs * r) {
 	irq_handler_t handler = isr_routines[r->int_no];
 	if (handler) {

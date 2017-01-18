@@ -18,20 +18,11 @@ static uint16* const VGA_MEMORY = (uint16*) 0xB8000;
   uint16* terminal_buffer;
   int currentPos;
 
+  void updateCurrentPos(){
+   currentPos = terminal_row * 80 + terminal_column;
+  }
 
 
-void updateCurrentPos(){
-	uint8 ah = 2;
-	uint8 dh = terminal_row;
-	uint8 dl = terminal_column;
-	uint8 bh = terminal_page;
-
-	asm ("mov %%ah, %0\n" :"=r"(ah));
-	asm ("mov %%dh, %0\n" :"=r"(dh));
-	asm ("mov %%dl, %0\n" :"=r"(dl));
-	asm ("mov %%bh, %0\n" :"=r"(bh));
-	asm ("int $10");
-}
 
 terminal_Color create_static_terminal_color(uint8 c){
 	terminal_Color res;
@@ -104,7 +95,7 @@ void terminal_putchar(char c) {
 		if (++terminal_row == VGA_HEIGHT)
 			terminal_row = 0;
 	}
-	//updateCurrentPos();
+  updateCurrentPos();
 }
 
 void terminal_write(const char* data, size_t size) {

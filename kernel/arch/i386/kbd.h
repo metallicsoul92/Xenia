@@ -64,8 +64,17 @@ unsigned char keyboard_map[128] =
       printf("%c",keyboard_map[keycode]);
       if(keyboard_map[keycode]  =='\n')
       terminal_writeLine("");
+      /*write_line deals with column and row  */
       else if(keyboard_map[keycode]  =='\t')
-      printf("     ");
+      {
+        printf("     ");
+      terminal_column +=5;
+    }
+      else if(keyboard_map[keycode] =='\b')
+      {
+      terminal_buffer[currentPos] =' ';
+      currentPos--;
+    }
     //  terminal_putentryat(keyboard_map[keycode],terminal_color,terminal_column++,terminal_row);
 //    terminal_buffer[currentPos++] = keyboard_map[keycode];
 //		terminal_buffer[currentPos++] = 0x07;

@@ -30,7 +30,7 @@ extern char kernel_symbols_start[];
 extern char kernel_symbols_end[];
 
 //How to find the symbols
-void (* symbol_find(const char * name))(void) {
+inline void (* symbol_find(const char * name))(void) {
 	kernel_symbol_t * k = (kernel_symbol_t *)&kernel_symbols_start;
 
 	while ((uintptr)k < (uintptr)&kernel_symbols_end) {
@@ -43,6 +43,7 @@ void (* symbol_find(const char * name))(void) {
 
 	return NULL;
 }
+
 
 
 #endif// ARCH_I386_REGISTERS_H

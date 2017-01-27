@@ -1,7 +1,7 @@
 #ifndef INLAS_H_
 #define INLAS_H
 
-#include <stdint.h>
+#include <sys/cdefs.h>
 #define NULL ((void *)0)
 
 static inline void outb(uint16 port, uint8 val)

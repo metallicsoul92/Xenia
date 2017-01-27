@@ -1,6 +1,8 @@
 #ifndef ARCH_I386_TSS_H
 #define ARCH_I386_TSS_H
 
+#include <stdint.h>
+
 extern void tss_flush(void);
 
 typedef struct tss_entry {

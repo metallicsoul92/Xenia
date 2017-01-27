@@ -131,7 +131,7 @@ void irq_install(void) {
 	for (int i = 0; i < IRQ_CHAIN_SIZE; i++) {
 		sprintf(buffer, "_irq%d", i);
 		irqs[i] = symbol_find(buffer);
-	}
+		}
 	irq_remap();
 	irq_setup_gates();
 }

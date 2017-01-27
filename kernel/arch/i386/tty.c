@@ -6,6 +6,15 @@
 #include <kernel/tty.h>
 
 #include "vga.h"
+#include "inlas.h"
+
+/* The I/O ports */
+#define TTY_COMMAND_PORT         0x3D4
+#define TTY_DATA_PORT            0x3D5
+
+/* The I/O port commands */
+#define TTY_HIGH_BYTE_COMMAND    14
+#define TTY_LOW_BYTE_COMMAND     15
 
 static const size_t VGA_WIDTH = 80;
 static const size_t VGA_HEIGHT = 25;
@@ -16,10 +25,14 @@ static uint16* const VGA_MEMORY = (uint16*) 0xB8000;
   size_t terminal_page;
   uint8 terminal_color;
   uint16* terminal_buffer;
-  int currentPos;
+  unsigned short currentPos;
 
   void updateCurrentPos(){
    currentPos = terminal_row * 80 + terminal_column;
+   outb(TTY_COMMAND_PORT, TTY_HIGH_BYTE_COMMAND);
+        outb(TTY_DATA_PORT,    ((currentPos >> 8) & 0x00FF));
+        outb(TTY_COMMAND_PORT, TTY_LOW_BYTE_COMMAND);
+        outb(TTY_DATA_PORT,    currentPos & 0x00FF);
   }
 
 
@@ -92,8 +105,10 @@ void terminal_putchar(char c) {
 	terminal_putentryat(uc, terminal_color, terminal_column, terminal_row);
 	if (++terminal_column == VGA_WIDTH) {
 		terminal_column = 0;
+    terminal_row++;
 		if (++terminal_row == VGA_HEIGHT)
-			terminal_row = 0;
+      terminal_page++;
+      terminal_column =0;
 	}
   updateCurrentPos();
 }

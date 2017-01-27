@@ -5,6 +5,10 @@
 
 #define EOF (-1)
 
+#ifndef NULL
+#define NULL ((void*)0)
+#endif
+
 #ifdef __cplusplus
 extern "C" {
 #endif

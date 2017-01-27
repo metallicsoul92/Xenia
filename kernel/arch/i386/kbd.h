@@ -5,6 +5,7 @@
 #include "../../include/kernel/tty.h"
 
 
+
 unsigned char keyboard_map[128] =
 {
     0,  27, '1', '2', '3', '4', '5', '6', '7', '8',	/* 9 */
@@ -61,20 +62,24 @@ unsigned char keyboard_map[128] =
 		keycode = inb(KEYBOARD_DATA_PORT);
 		if(keycode < 0)
 			return;
-      printf("%c",keyboard_map[keycode]);
-      if(keyboard_map[keycode]  =='\n')
+      if(keyboard_map[keycode]  =='\n'){
       terminal_writeLine("");
+      updateCurrentPos();
+}
       /*write_line deals with column and row  */
       else if(keyboard_map[keycode]  =='\t')
       {
         printf("     ");
       terminal_column +=5;
+      updateCurrentPos();
     }
       else if(keyboard_map[keycode] =='\b')
       {
-      terminal_buffer[currentPos] =' ';
-      currentPos--;
-    }
+        terminal_putentryat(' ',terminal_color,--terminal_column,terminal_row);
+      updateCurrentPos();
+    }else
+      printf("%c",keyboard_map[keycode]);
+
     //  terminal_putentryat(keyboard_map[keycode],terminal_color,terminal_column++,terminal_row);
 //    terminal_buffer[currentPos++] = keyboard_map[keycode];
 //		terminal_buffer[currentPos++] = 0x07;

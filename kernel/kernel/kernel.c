@@ -1,17 +1,17 @@
 #include <stdio.h>
 
 #include "../include/kernel/tty.h"
-#include "../arch/i386/gdt.h"
+#include "../include/kernel/timer.h"
 //#include "../arch/i386/inlas.h"
 #include "../../kernel/arch/i386/gdt.h"
 #include "../../kernel/arch/i386/idt.h"
 #include "../../kernel/arch/i386/irq.h"
 #include "../../kernel/arch/i386/isr.h"
-#include "../../kernel/arch/i386/page.h"
 #include "../include/Xenia/module.h"
 #include "../include/Xenia/sysinfo.h"
 #include "../include/Xenia/time.h"
 #include "../arch/i386/kbd.h"
+#include "../include/Xenia/multiboot.h"
 /*this prints the cursor to row 1 column 0;
 outb(0x3D4, 14);
 outb(0x3D5, 0x00);
@@ -19,24 +19,61 @@ outb(0x3D4, 15);
 outb(0x3D5, 0x50);
 */
 
-void kernel_main(void) {
+
+void kernel_main(unsigned long magic, unsigned long addr) {
+
 	__state__ = KS_STARTUP;
+	multiboot_info_t *mbt;
+
+	if(magic != MULTIBOOT_BOOTLOADER_MAGIC){
+		printf("Error, magic: %u",magic);
+
+	}
+	mbt=(multiboot_info_t *) addr;
 	terminal_initialize();
+//	terminal_writeLine("Initializing [Xenia] version 0 . 0 . 1 . 0 ");
+	printf("Initializing [Xenia] Version 0.0.1.1");
+	putline("");
+	multiboot_memory_map_t* mmap = mbt->mmap_addr;
+		while(mmap < mbt->mmap_addr + mbt->mmap_length) {
+			mmap = (multiboot_memory_map_t*) ( (unsigned int)mmap + mmap->size + sizeof(mmap->size) );
+		}
+		char *memup = uitoa(mbt->mem_upper,10);
+		printf("Memory Upper:%s",memup);
+		putline("");
+		char *memlow = uitoa(mbt->mem_lower,10);
+		printf("Memory Lower:%s",memlow);
+	putline("");
+//	terminal_writeLine("Current Multiboot Size:");
 	gdt_install();
 	idt_install();
 	isrs_install();
 	irq_install();
-	setupPaging();
 
-	terminal_writeLine("Initializing Xenia.");
-	terminal_writeLine("Installing Global Descriptor Table");
+	unsigned int test = 54938;
+	printf("Test: %u",test);
+	char *tests = uitoa(test,10);
+	putline("");
+	printf("Test String:%s",tests);
+	putline("");
+	putline("");
 
-	terminal_writeLine("GDT Installed. Installing Interrupt Descriptor Table");
-	terminal_writeLine("IDT Installed. Installing Interupt Request Line");
-	terminal_writeLine("ISRS Installed... IRQ Installed...");
-	terminal_writeLine("Paging installed...");
+
+	printf("Installing Global Descriptor Table");
+	putline("");
+	printf("GDT Installed. Installing Interrupt Descriptor Table");
+	putline("");
+	printf("IDT Installed. Installing Interupt Request Line");
+	putline("");
+	printf("ISRS Installed... IRQ Installed...");
+
+
+	/**My Debug statement*/
 	char *currentPosString =itoa(currentPos,10);
+	char *magicString = uitoa(magic,16);
 	printf("Current Position: %s\n", currentPosString );
+		putline("");
+	printf("Magic Number: 0x%s",magicString);
 	while(1){
 		keyboard_handler_main();
 	}

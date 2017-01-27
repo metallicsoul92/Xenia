@@ -89,6 +89,32 @@ char* itoa(int val, int base){
     return &buf[i+1];
 
 }
+char* litoa(long val, int base){
+
+    static char buf[32] = {0};
+
+    int i = 30;
+
+    for(; val && i ; --i, val /= base)
+{
+        buf[i] = "0123456789abcdef"[val % base];
+}
+    return &buf[i+1];
+
+}
+char* uitoa(unsigned int val, int base){
+
+    static char buf[32] = {0};
+
+    int i = 30;
+
+    for(; val && i ; --i, val /= base)
+{
+        buf[i] = "0123456789abcdef"[val % base];
+}
+    return &buf[i+1];
+
+}
 
 inline static int atoi(const char **s)
 {
@@ -98,5 +124,6 @@ inline static int atoi(const char **s)
 		i = i*10 + *((*s)++) - '0';
 	return i;
 }
+
 
 #endif //ctypes.h

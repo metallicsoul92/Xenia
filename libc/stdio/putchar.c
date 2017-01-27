@@ -14,6 +14,7 @@ int putchar(int ic) {
 	return ic;
 }
 
+
 int putline(char * string){
 	#if defined(__is_libk)
 		terminal_writeLine(string);

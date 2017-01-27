@@ -2,10 +2,14 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdarg.h>
+//#include <stdarg.h>
 #include <string.h>
 #include <ctypes.h>
 #include <limits.h>
+
+
+#include "../include/stdarg.h"
+
 
 static bool print(const char* data, size_t length) {
 	const unsigned char* bytes = (const unsigned char*) data;
@@ -25,6 +29,7 @@ int printf(const char* restrict format, ...) {
 		size_t maxrem = INT_MAX - written;
 
 		if (format[0] != '%' || format[1] == '%') {
+
 			if (format[0] == '%')
 				format++;
 			size_t amount = 1;
@@ -54,9 +59,11 @@ int printf(const char* restrict format, ...) {
 				return -1;
 			written++;
 		}
-		else if (*format == 's') {
+		else if (*format == 'd') {
 			format++;
-			const char* str = va_arg(parameters, const char*);
+			int i = (int)va_arg(parameters, int);
+			va_copy(i,parameters);
+			const char* str = itoa(i,10);
 			size_t len = strlen(str);
 			if (maxrem < len) {
 				// TODO: Set errno to EOVERFLOW.
@@ -65,7 +72,49 @@ int printf(const char* restrict format, ...) {
 			if (!print(str, len))
 				return -1;
 			written += len;
-		} else {
+		}
+		else if (*format == 'u') {
+			format++;
+			unsigned int ui = (unsigned int)va_arg(parameters, unsigned int);
+			va_copy(ui,parameters);
+			const char* str = uitoa(ui,10);
+			size_t len = strlen(str);
+			if (maxrem < len) {
+				// TODO: Set errno to EOVERFLOW.
+				return -1;
+			}
+			if (!print(str, len))
+				return -1;
+			written += len;
+		}
+		else if (*format == 'x') {
+			format++;
+			long l = (long)va_arg(parameters, long);
+			va_copy(l,parameters);
+			const char* str = litoa(l,16);
+			size_t len = strlen(str);
+			if (maxrem < len) {
+				// TODO: Set errno to EOVERFLOW.
+				return -1;
+			}
+			if (!print(str, len))
+				return -1;
+			written += len;
+		}
+		 	else if (*format == 's') {
+				format++;
+				const char* str = va_arg(parameters, const char*);
+				size_t len = strlen(str);
+				if (maxrem < len) {
+					// TODO: Set errno to EOVERFLOW.
+					return -1;
+				}
+				if (!print(str, len))
+					return -1;
+				written += len;
+			}
+
+		else {
 			format = format_begun_at;
 			size_t len = strlen(format);
 			if (maxrem < len) {

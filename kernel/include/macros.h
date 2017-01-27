@@ -2,7 +2,7 @@
 #define MACROS_H_
 
 
-//Taken from the libre engine
+//Taken from the libre engine 
 
 #define LIBRE_CREATE_STRUCT_BEGIN_INTERNAL(DATATYPENAME)\
     struct DATATYPENAME{\

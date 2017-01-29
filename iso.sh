@@ -8,7 +8,7 @@ mkdir -p isodir/boot/grub
 
 cp sysroot/boot/myos.kernel isodir/boot/myos.kernel
 cat > isodir/boot/grub/grub.cfg << EOF
-menuentry "Xenia 0.0.1.0" {
+menuentry "Xenia 0.0.1.1" {
 	multiboot /boot/myos.kernel
 }
 EOF

@@ -37,7 +37,7 @@ extern  uint8 terminal_color;
 extern  uint16* terminal_buffer;
 extern  unsigned short currentPos;
 
-inline void tty_newl(){terminal_column++;terminal_row=0;}
+inline void tty_newl(){terminal_column=(size_t)0;terminal_row++;updateCurrentPos();}
 
 void setTerminalColor(terminal_Color col);
 

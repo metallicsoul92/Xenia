@@ -1,10 +1,10 @@
 TODO:
-1/7/17:
+1/29/17:
 
 Kernel:
-create shell
+Setup kmalloc
 Allow for kernel to go into userspace
-
+create shell
 
 Libc:
 Finish Posix functions

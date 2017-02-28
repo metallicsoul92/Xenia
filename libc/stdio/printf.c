@@ -73,11 +73,11 @@ int printf(const char* restrict format, ...) {
 				return -1;
 			written += len;
 		}
-		else if (*format == 'u') {
+		else if (*format == 'u'){
 			format++;
 			unsigned int ui = (unsigned int)va_arg(parameters, unsigned int);
 			va_copy(ui,parameters);
-			const char* str = uitoa(ui,10);
+			const char *str =uitoa(ui,10);// = uitoa(ui,10);
 			size_t len = strlen(str);
 			if (maxrem < len) {
 				// TODO: Set errno to EOVERFLOW.
@@ -89,9 +89,9 @@ int printf(const char* restrict format, ...) {
 		}
 		else if (*format == 'x') {
 			format++;
-			long l = (long)va_arg(parameters, long);
+			int l = (int)va_arg(parameters, int);
 			va_copy(l,parameters);
-			const char* str = litoa(l,16);
+		 const char* str  = itoa(l,16); //in hex
 			size_t len = strlen(str);
 			if (maxrem < len) {
 				// TODO: Set errno to EOVERFLOW.
@@ -103,7 +103,7 @@ int printf(const char* restrict format, ...) {
 		}
 		 	else if (*format == 's') {
 				format++;
-				const char* str = va_arg(parameters, const char*);
+				char* str = va_arg(parameters, const char*);
 				size_t len = strlen(str);
 				if (maxrem < len) {
 					// TODO: Set errno to EOVERFLOW.

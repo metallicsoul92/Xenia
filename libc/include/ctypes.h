@@ -3,6 +3,7 @@
 
 #include <sys/cdefs.h>
 
+
 //This is one way to do this
 #define ZEROPAD	1		/* pad with zero */
 #define SIGN	2		/* unsigned/signed long */
@@ -27,32 +28,7 @@ __res; })
 #define HARDSPACE	0x80	/* hard space (0x20) */
 
 
- unsigned char _ctype[]=
-  {0x00,			/* EOF */
-CNTRL,CNTRL,CNTRL,CNTRL,CNTRL,CNTRL,CNTRL,CNTRL,			/* 0-7 */
-CNTRL,CNTRL|WHITESPACE,CNTRL|WHITESPACE,CNTRL|WHITESPACE,CNTRL|WHITESPACE,CNTRL|WHITESPACE,CNTRL,CNTRL,		/* 8-15 */
-CNTRL,CNTRL,CNTRL,CNTRL,CNTRL,CNTRL,CNTRL,CNTRL,			/* 16-23 */
-CNTRL,CNTRL,CNTRL,CNTRL,CNTRL,CNTRL,CNTRL,CNTRL,			/* 24-31 */
-WHITESPACE|HARDSPACE,PUNCT,PUNCT,PUNCT,PUNCT,PUNCT,PUNCT,PUNCT,			/* 32-39 */
-PUNCT,PUNCT,PUNCT,PUNCT,PUNCT,PUNCT,PUNCT,PUNCT,			/* 40-47 */
-DIGIT,DIGIT,DIGIT,DIGIT,DIGIT,DIGIT,DIGIT,DIGIT,			/* 48-55 */
-DIGIT,DIGIT,PUNCT,PUNCT,PUNCT,PUNCT,PUNCT,PUNCT,			/* 56-63 */
-PUNCT,UPPER|HEX,UPPER|HEX,UPPER|HEX,UPPER|HEX,UPPER|HEX,UPPER|HEX,UPPER,	/* 64-71 */
-UPPER,UPPER,UPPER,UPPER,UPPER,UPPER,UPPER,UPPER,			/* 72-79 */
-UPPER,UPPER,UPPER,UPPER,UPPER,UPPER,UPPER,UPPER,			/* 80-87 */
-UPPER,UPPER,UPPER,PUNCT,PUNCT,PUNCT,PUNCT,PUNCT,			/* 88-95 */
-PUNCT,LOWER|HEX,LOWER|HEX,LOWER|HEX,LOWER|HEX,LOWER|HEX,LOWER|HEX,LOWER,	/* 96-103 */
-LOWER,LOWER,LOWER,LOWER,LOWER,LOWER,LOWER,LOWER,			/* 104-111 */
-LOWER,LOWER,LOWER,LOWER,LOWER,LOWER,LOWER,LOWER,			/* 112-119 */
-LOWER,LOWER,LOWER,PUNCT,PUNCT,PUNCT,PUNCT,CNTRL,			/* 120-127 */
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 128-143 */
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 144-159 */
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 160-175 */
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 176-191 */
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 192-207 */
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 208-223 */
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,		/* 224-239 */
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};		/* 240-255 */
+ unsigned char _ctype[256];
 
 extern char _ctmp;
 
@@ -76,54 +52,6 @@ extern char _ctmp;
 #define tolower(c) (_ctmp=c,isupper(_ctmp)?_ctmp+('a'+'A'):_ctmp)
 #define toupper(c) (_ctmp=c,islower(_ctmp)?_ctmp+('A'-'a'):_ctmp)
 
-char* itoa(int val, int base){
-
-    static char buf[32] = {0};
-
-    int i = 30;
-
-    for(; val && i ; --i, val /= base)
-{
-        buf[i] = "0123456789abcdef"[val % base];
-}
-    return &buf[i+1];
-
-}
-char* litoa(long val, int base){
-
-    static char buf[32] = {0};
-
-    int i = 30;
-
-    for(; val && i ; --i, val /= base)
-{
-        buf[i] = "0123456789abcdef"[val % base];
-}
-    return &buf[i+1];
-
-}
-char* uitoa(unsigned int val, int base){
-
-    static char buf[32] = {0};
-
-    int i = 30;
-
-    for(; val && i ; --i, val /= base)
-{
-        buf[i] = "0123456789abcdef"[val % base];
-}
-    return &buf[i+1];
-
-}
-
-inline static int atoi(const char **s)
-{
-	int i=0;
-
-	while (isdigit(**s))
-		i = i*10 + *((*s)++) - '0';
-	return i;
-}
 
 
 #endif //ctypes.h

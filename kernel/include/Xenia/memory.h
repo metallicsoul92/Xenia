@@ -26,13 +26,18 @@ typedef struct _mBlockList mBlockList;
 
 void init_memBlockList(mBlockList* mbl);
 
-void allocBlock(mBlock *block,size_t size,mBlock *prev,mBlock *next);
 void pushBlock(mBlockList *list,mBlock *block);
+mBlock *popBlock(mBlockList* list);
+
 mBlock *getHead(mBlock *block);
 mBlock *getTail(mBlock *block);
 
 
 void freeMBlock(mBlock *block);
+
+/*naive kernel malloc*/
+void *__nkmalloc(size_t sz);
+
 
 //physical Memory
 

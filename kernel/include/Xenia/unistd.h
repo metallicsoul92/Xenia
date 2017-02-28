@@ -10,6 +10,10 @@
 #define sys_close 6
 #define sys_waitpid 7
 
+#ifndef LIBC_UNISTD_H_
+#include <unistd.h>
+#endif
+
 
 
 

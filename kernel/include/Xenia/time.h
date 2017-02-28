@@ -9,7 +9,7 @@
 extern "C" {
 #endif
 
-typedef struct time{
+struct __time{
   	int tm_sec;	//seconds after the minute	0-60*
     int tm_min;		//minutes after the hour	0-59
     int tm_mday;		//day of the month	1-31
@@ -20,6 +20,7 @@ typedef struct time{
     int	tm_isdst;	//Daylight Saving Time flag
 };
 
+typedef struct __time time;
 
 #ifdef __cplusplus
 }

@@ -10,8 +10,16 @@ extern "C" {
 __attribute__((__noreturn__))
 void abort(void);
 
+char *itoa(int val, int base);
+char *itoas(int val, char *str, int base);
+char *uitoa(unsigned int val, int base);
+char *uitoas(unsigned int val, char *str, int base);
+char *litoa(long val, int base);
+char *litoas(long val, char *str, int base);
 
-typedef unsigned int size_t;
+
+#define OFFSETOF(TYPE, ELEMENT) ((size_t)&(((TYPE *)0)->ELEMENT))
+
 
 
 #ifdef __cplusplus

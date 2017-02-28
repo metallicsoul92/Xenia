@@ -40,6 +40,8 @@ typedef long ssize_t;
 #endif	/* !__GNUC__ */
 #endif	/* !(__STDC__ || __cplusplus) */
 
+typedef unsigned int size_t;
+
 
 /* This typedefs are defined in */
 /* Types used in disk, inode, etc. data structures. */

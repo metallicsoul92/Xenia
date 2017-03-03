@@ -15,6 +15,16 @@ char* itoa(int val, int base){
     return &buf[i+1];
 
 }
+char *itoas(int val, char *str, int base){
+  int i = 30;
+  for(; val && i ; --i, val /= base)
+{
+      str[i] = "0123456789abcdef"[val % base];
+}
+  return str[i+1];
+}
+
+
 inline char* litoa(long val, int base){
 
     static char buf[32] = {0};
@@ -28,6 +38,15 @@ inline char* litoa(long val, int base){
     return &buf[i+1];
 
 }
+
+char *litoas(long val, char *str, int base){
+  int i = 30;
+  for(; val && i ; --i, val /= base)
+{
+      str[i] = "0123456789abcdef"[val % base];
+}
+  return str[i+1];
+}
  char* uitoa(unsigned int val, int base){
 
   static char buf[32] = {0};
@@ -40,6 +59,14 @@ inline char* litoa(long val, int base){
 
     return &buf[i+1];
 
+}
+char *uitoas(unsigned int val, char *str, int base){
+  int i = 30;
+  for(; val && i ; --i, val /= base)
+{
+      str[i] = "0123456789abcdef"[val % base];
+}
+  return str[i+1];
 }
 
  int atoi(const char **s)

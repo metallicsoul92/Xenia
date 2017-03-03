@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include "../kernel/page.h"
 
+/*TODO: Study: https://github.com/SamyPesse/How-to-Make-a-Computer-Operating-System/blob/master/src/kernel/arch/x86/vmm.h
+*/
+
 struct _mBlock{
     struct _mBlock *prev; //previous block
     uint8 used:1; // determines whether the block is used

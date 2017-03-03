@@ -143,13 +143,13 @@ mboot_reserved_start = (uint32)mbt;
 	printf("ISRS Installed... IRQ Installed...\n");
 
 	unsigned int uitest = 54938;
-	printf("Testing unsigned int test: %u\n",uitest);
+	printf("Testing unsigned int printf(u): %u\n",uitest);
 	char *uitests = uitoa(uitest,10);
-	printf("Test String (uitoa's representation):%s\n",uitests);
+	printf("Test String (uitoa's representation (s)):%s\n",uitests);
 	int itest = 8675309;
-	printf("Testing unsigned int test: %d\n",itest);
+	printf("Testing int printf(d): %d\n",itest);
 	char *itests = itoa(itest,10);
-	printf("Test String (itoa's representation):%s\n",itests);
+	printf("Test String (itoa's representation(s)):%s\n",itests);
 	uint32 new_frame = allocate_frame();
 	uint32 new_frame_addr = mmap_read(new_frame, MMAP_GET_ADDR);
 	char *framestr = uitoa(new_frame_addr,16);

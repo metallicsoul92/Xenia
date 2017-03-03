@@ -11,6 +11,10 @@
 #include "../include/stdarg.h"
 
 
+
+/*TODO: PRINTF: add char[16] buf
+								create sitoa in stdlib which inputs a buffer
+*/
 static bool print(const char* data, size_t length) {
 	const unsigned char* bytes = (const unsigned char*) data;
 	for (size_t i = 0; i < length; i++)
@@ -24,7 +28,7 @@ int printf(const char* restrict format, ...) {
 	va_start(parameters, format);
 
 	int written = 0;
-
+  char str[32];
 	while (*format != '\0') {
 		size_t maxrem = INT_MAX - written;
 
@@ -63,7 +67,8 @@ int printf(const char* restrict format, ...) {
 			format++;
 			int i = (int)va_arg(parameters, int);
 			va_copy(i,parameters);
-			const char* str = itoa(i,10);
+			//const char* str = itoa(i,10);
+			itoas(i,str,10);
 			size_t len = strlen(str);
 			if (maxrem < len) {
 				// TODO: Set errno to EOVERFLOW.
@@ -77,7 +82,9 @@ int printf(const char* restrict format, ...) {
 			format++;
 			unsigned int ui = (unsigned int)va_arg(parameters, unsigned int);
 			va_copy(ui,parameters);
-			const char *str =uitoa(ui,10);// = uitoa(ui,10);
+			//const char *str =uitoa(ui,10);// = uitoa(ui,10);
+
+			itoas(ui,str,10);
 			size_t len = strlen(str);
 			if (maxrem < len) {
 				// TODO: Set errno to EOVERFLOW.
@@ -91,7 +98,8 @@ int printf(const char* restrict format, ...) {
 			format++;
 			int l = (int)va_arg(parameters, int);
 			va_copy(l,parameters);
-		 const char* str  = itoa(l,16); //in hex
+		 //const char* str  = itoa(l,16); //in hex
+		 itoas(l,str,16);
 			size_t len = strlen(str);
 			if (maxrem < len) {
 				// TODO: Set errno to EOVERFLOW.
